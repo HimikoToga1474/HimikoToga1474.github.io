@@ -1,1 +1,102 @@
-<h1>hello<h1>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script>
+        $(document).ready(function() {{
+            $("#game_name").autocomplete({{
+                source: "/autocomplete",
+                minLength: 2,
+                select: function(event, ui) {{
+                    $("#game_name").val(ui.item.value);
+                }}
+            }});
+        );
+        </script>
+        <title>Game Codes</title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <style>
+            body {{
+                background-color: #1a001a;
+                color: #e6e6e6;
+                font-family: 'Roboto', sans-serif;
+                margin: 0;
+                padding: 20px;
+                text-shadow: 0 0 5px #5a5a5a;
+            }}
+            input[type="text"], input[type="submit"] {{
+                background-color: #333;
+                color: #e6e6e6;
+                border: 1px solid #5a5a5a;
+                padding: 8px 16px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }}
+            input[type="submit"] {{
+                background-color: #6a0dad;
+                box-shadow: 0 0 8px #6a0dad;
+                transition: background-color 0.3s;
+            }}
+            input[type="submit"]:hover {{
+                background-color: #9932cc;
+                box-shadow: 0 0 12px #9932cc;
+            }}
+            h3 {{
+                color: #cc66ff;
+                text-shadow: 0 0 10px #cc66ff;
+            }}
+            ul {{
+                list-style-type: none;
+                padding: 0;
+            }}
+            li {{
+                margin: 10px 0;
+                padding: 10px;
+                background-color: #333;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }}
+            button {{
+                background-color: #6a0dad;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-left: 10px;
+                box-shadow: 0 0 8px #6a0dad;
+                transition: background-color 0.3s;
+            }}
+            button:hover {{
+                background-color: #9932cc;
+                box-shadow: 0 0 12px #9932cc;
+            }}
+            .copied {{
+                color: #AAA;
+                text-decoration: line-through;
+            }}
+        </style>
+    </head>
+    <body>
+        <form method="post">
+            Game Name: <input type="text" name="game_name" id="game_name">
+            <input type="submit" value="Get Codes">
+        </form>
+        <h3>{h3_text}</h3>
+        <ul>'''
+    for code in codes:
+        html_content += f'''
+            <li id="item-{code}">
+                {code} <button onclick="copyToClipboard('{code}')">Copy</button>
+            </li>'''
+    html_content += '''
+        </ul>
+        <script>
+            function copyToClipboard(code) {
+                navigator.clipboard.writeText(code);
+                document.getElementById('item-' + code).classList.add('copied');
+                document.querySelector('#item-' + code + ' button').innerText = 'Copied';
+            }
+        </script>
+    </body>
+    </html>
